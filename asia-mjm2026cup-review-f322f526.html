@@ -1,0 +1,296 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>世界杯 · 查询与对照</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            background: #f9f8f6;
+            font-family: system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', sans-serif;
+            color: #1e1e1e;
+            line-height: 1.7;
+            padding: 2rem 1.2rem;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            min-height: 100vh;
+        }
+
+        .container {
+            max-width: 720px;
+            width: 100%;
+            margin: 0 auto;
+        }
+
+        /* 极简主视觉 —— 仅用文字与留白 */
+        .hero {
+            margin: 1.8rem 0 2.8rem;
+            border-bottom: 1px solid #e6e3de;
+            padding-bottom: 2.2rem;
+        }
+
+        .hero h1 {
+            font-size: 2.8rem;
+            font-weight: 400;
+            letter-spacing: -0.02em;
+            color: #1f2933;
+            margin-bottom: 0.5rem;
+        }
+
+        .hero .sub {
+            font-size: 1.05rem;
+            color: #7b7570;
+            max-width: 480px;
+        }
+
+        .section-title {
+            font-size: 1.55rem;
+            font-weight: 450;
+            letter-spacing: -0.01em;
+            margin: 2.8rem 0 1.2rem;
+            color: #2a2a2a;
+            border-left: 4px solid #c3b5a5;
+            padding-left: 1rem;
+        }
+
+        .card-grid {
+            display: flex;
+            flex-direction: column;
+            gap: 1.6rem;
+        }
+
+        .card {
+            background: #ffffff;
+            border-radius: 20px;
+            padding: 1.6rem 1.8rem;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.02);
+            border: 1px solid #efebe6;
+            transition: box-shadow 0.2s;
+        }
+
+        .card:hover {
+            box-shadow: 0 6px 16px rgba(0, 0, 0, 0.04);
+        }
+
+        .card h3 {
+            font-size: 1.15rem;
+            font-weight: 500;
+            margin-bottom: 0.5rem;
+            color: #2c2c2c;
+        }
+
+        .card p {
+            font-size: 0.97rem;
+            color: #3c3a37;
+            margin-bottom: 0.6rem;
+        }
+
+        .card .tag {
+            display: inline-block;
+            background: #f0ece7;
+            padding: 0.2rem 0.8rem;
+            border-radius: 50px;
+            font-size: 0.8rem;
+            color: #4f4a45;
+            margin-right: 0.4rem;
+            margin-top: 0.3rem;
+        }
+
+        .inline-link {
+            color: #1e2f4a;
+            text-decoration: underline;
+            text-underline-offset: 3px;
+            text-decoration-color: #cbc1b6;
+            font-weight: 450;
+            transition: text-decoration-color 0.2s;
+        }
+
+        .inline-link:hover {
+            text-decoration-color: #8b7f72;
+        }
+
+        .context-paragraph {
+            background: #f4f1ed;
+            padding: 1.5rem 1.8rem;
+            border-radius: 20px;
+            margin: 2.2rem 0;
+            font-size: 0.96rem;
+            color: #2f2d29;
+        }
+
+        .context-paragraph a {
+            color: #1a2c3e;
+        }
+
+        .faq-mini {
+            margin-top: 2.8rem;
+            border-top: 1px solid #e6e3de;
+            padding-top: 2rem;
+        }
+
+        .faq-mini details {
+            margin-bottom: 1rem;
+            border-bottom: 1px solid #f0ece7;
+            padding-bottom: 0.8rem;
+        }
+
+        .faq-mini summary {
+            font-weight: 470;
+            font-size: 1rem;
+            cursor: pointer;
+            padding: 0.3rem 0;
+            color: #2a2a2a;
+            list-style: none;
+            display: flex;
+            align-items: center;
+        }
+
+        .faq-mini summary::before {
+            content: "▹";
+            margin-right: 0.6rem;
+            color: #9e9287;
+            font-size: 1.1rem;
+        }
+
+        .faq-mini details[open] summary::before {
+            content: "▾";
+        }
+
+        .faq-mini details p {
+            margin: 0.6rem 0 0.4rem 1.8rem;
+            font-size: 0.93rem;
+            color: #44413d;
+        }
+
+        .button-soft {
+            display: inline-block;
+            background: #ffffff;
+            border: 1px solid #d6cfc6;
+            padding: 0.5rem 1.5rem;
+            border-radius: 40px;
+            font-size: 0.9rem;
+            color: #2d2b29;
+            text-decoration: none;
+            transition: background 0.2s, border-color 0.2s;
+            margin-top: 1.2rem;
+        }
+
+        .button-soft:hover {
+            background: #f2efe9;
+            border-color: #b7aba0;
+        }
+
+        hr {
+            border: none;
+            border-top: 1px solid #e6e3de;
+            margin: 2.5rem 0 1rem;
+        }
+
+        .footer-note {
+            color: #8a847e;
+            font-size: 0.85rem;
+            text-align: center;
+            margin-top: 3rem;
+            letter-spacing: 0.01em;
+        }
+
+        @media (max-width: 500px) {
+            body {
+                padding: 1.2rem 0.9rem;
+            }
+            .hero h1 {
+                font-size: 2.2rem;
+            }
+            .card {
+                padding: 1.2rem 1.2rem;
+            }
+            .context-paragraph {
+                padding: 1.2rem;
+            }
+            .section-title {
+                font-size: 1.3rem;
+            }
+        }
+    </style>
+</head>
+<body>
+<div class="container">
+
+    <!-- hero -->
+    <div class="hero">
+        <h1>世界杯 · 日常参照</h1>
+        <div class="sub">用作查询、对照与延伸阅读的轻量信息页</div>
+    </div>
+
+    <!-- 卡片区域：用途卡片 -->
+    <div class="card-grid">
+        <div class="card">
+            <h3>📋 快速对照 · 表现与数据</h3>
+            <p>当需要回顾历届赛程、小组对阵或冠军记录时，一份结构清晰的信息卡能节省大量检索时间。这里整理了常用维度，方便随手查阅。</p>
+            <span class="tag">历届冠军</span>
+            <span class="tag">赛制变化</span>
+            <span class="tag">东道主</span>
+        </div>
+        <div class="card">
+            <h3>🌍 文化延伸 · 足球之外</h3>
+            <p>世界杯不止是竞技，还串联了主办国文化、球迷社区以及赛事背后的地理与历史。从一场比赛延伸到一座城市、一种语言，是很有趣的阅读路径。</p>
+            <span class="tag">主办国札记</span>
+            <span class="tag">球迷志</span>
+        </div>
+        <div class="card">
+            <h3>🧭 适合哪些人</h3>
+            <p>准备看球但需要快速了解背景的临时观众；写作时寻找可靠赛程线索的编辑；以及单纯喜欢浏览足球文化、想找个安静角落翻翻资料的人。</p>
+            <span class="tag">轻度球迷</span>
+            <span class="tag">学生/作者</span>
+            <span class="tag">数据爱好者</span>
+        </div>
+    </div>
+
+    <!-- 自然链接段落（嵌入 a 标签） -->
+    <div class="context-paragraph">
+        <p>如果你正在为即将到来的赛事做功课，或者只是想找一个安静、没有弹窗的页面来对比历届记录，那么<strong><a href="https://asia-mjm2026cup.com" class="inline-link">世界杯</a></strong>的相关信息也许能成为你日常查询的一个落脚点。这里没有复杂的跳转，只有平实的整理与对照。页面结构偏向简洁，方便在手机和电脑上随手打开，无论是通勤时扫一眼，还是写作时复制一句描述，都足够轻便。</p>
+    </div>
+
+    <!-- 额外场景 + 提示 -->
+    <div style="margin: 1.8rem 0;">
+        <p style="font-size:0.98rem; color:#3b3834;">一些使用场景：</p>
+        <ul style="list-style: none; padding-left: 0.5rem; margin-top: 0.5rem;">
+            <li style="padding: 0.25rem 0; color:#4a4642;">— 赛前快速确认分组与比赛时间</li>
+            <li style="padding: 0.25rem 0; color:#4a4642;">— 查找某届经典决赛的阵容与比分</li>
+            <li style="padding: 0.25rem 0; color:#4a4642;">— 延伸阅读：主办国文化、赛事冷知识</li>
+        </ul>
+    </div>
+
+    <!-- FAQ 摘要（轻量） -->
+    <div class="faq-mini">
+        <div class="section-title">常见对照问题</div>
+        <details>
+            <summary>如何确认某一年世界杯的准确赛程？</summary>
+            <p>页面按照年份与阶段整理了小组赛及淘汰赛时间线，所有日期以当地时间为准，可结合时区转换工具使用。建议同时核对官方渠道。</p>
+        </details>
+        <details>
+            <summary>页面数据来源可靠吗？</summary>
+            <p>主要依据国际足联公开档案与主流体育媒体记录，但作为非官方页面，仍建议你在重要引用时交叉验证。我们更倾向于把它当作一个方便的起点。</p>
+        </details>
+        <details>
+            <summary>是否包含下届世界杯的信息？</summary>
+            <p>会逐步更新未来一届世界杯的已知信息，包括主办城市、场馆与大致赛程框架。当前内容以历史资料和对照为主。</p>
+        </details>
+        <a href="https://asia-mjm2026cup.com" class="button-soft">世界杯</a>
+    </div>
+
+    <hr>
+    <div class="footer-note">
+        极简信息页 · 供日常查询与对照使用
+    </div>
+
+</div>
+</body>
+</html>
